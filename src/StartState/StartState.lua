@@ -15,9 +15,8 @@ function StartState:init()
             {
                 text = 'New Game',
                 onSelect = function()
-                    love.event.quit()
---                    gStateStack:pop()
---                    gStateStack:push(TakeTurnState(self.battleState))
+                    gStateStack:pop()
+                    gStateStack:push(PlayState())
                 end
             },
             {
@@ -60,4 +59,7 @@ function StartState:drawTitle()
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf("Mine Sweeper", 0, VIRTUAL_HEIGHT / 2 + 36,
         VIRTUAL_WIDTH, 'center')
+end
+
+function StartState:exit()
 end

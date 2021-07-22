@@ -8,6 +8,9 @@
 require 'src/Constants'
 require 'src/StateStack'
 require 'src/StartState/StartState'
+require 'src/PlayState/PlayState'
+require 'src/PlayState/Board/Board'
+require 'src/PlayState/Board/Tile'
 
 require 'src/GUI/Menu'
 require 'src/GUI/Panel'
