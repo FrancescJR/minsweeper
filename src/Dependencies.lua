@@ -9,3 +9,8 @@ require 'src/Constants'
 require 'src/StateStack'
 require 'src/StartState/StartState'
 
+require 'src/GUI/Menu'
+require 'src/GUI/Panel'
+require 'src/GUI/Selection'
+
+
