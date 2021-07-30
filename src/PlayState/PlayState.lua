@@ -10,6 +10,7 @@ PlayState = Class{}
 
 function PlayState:init()
     self.board = Board(44,24)
+--    self.board = Board(3,2)
 end
 
 function PlayState:enter()

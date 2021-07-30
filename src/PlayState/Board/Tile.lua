@@ -7,8 +7,7 @@
 --
 Tile = Class{}
 
-function Tile:init(posX, posY, width, bombs)
-
+function Tile:init(posX, posY, width, hasBomb)
     self.posX = posX
     self.posY = posY
     self.x = posX * width * 2 + 10
@@ -19,9 +18,12 @@ function Tile:init(posX, posY, width, bombs)
     end
     self.width = width
 
+    self.upInGrid = posX % 2 == 1;
+
     self:generateVertices()
-    self.bombs = 0;
-    self.adjacentBombsIndicator = 0;
+    self.hasBomb = hasBomb;
+
+    self.adjacentBombsIndicator = 5;
     self.uncovered = false;
     self.selected = false;
 end
@@ -42,6 +44,10 @@ function Tile:generateVertices()
     table.insert(self.vertices, self.y + self.width)
 end
 
+function Tile:setAdjacentsBombsIndicater(number)
+    self.adjacentBombsIndicator = number
+end
+
 function Tile:uncover()
     self.uncovered = true
 end
@@ -55,15 +61,29 @@ function Tile:unSelect()
 end
 
 function Tile:render()
-    love.graphics.setColor(1, 1, 1, 1)
-    if self.uncovered or self.selected then
+
+    if self.selected then
+        love.graphics.setColor(1, 1, 1, 1)
         love.graphics.polygon("fill", self.vertices)
     else
-        if self.uncovered then
-            love.graphics.setColor(1, 255, 1, 1)
+        if self.hasBomb then
+            love.graphics.setColor(1, 0, 1, 1)
             love.graphics.polygon("fill", self.vertices)
+            love.graphics.setColor(1, 1, 1, 1)
         else
-            love.graphics.polygon("line", self.vertices)
+--            if self.uncovered then
+--                love.graphics.setColor(1, 255, 1, 1)
+--                love.graphics.polygon("fill", self.vertices)
+--            else
+                love.graphics.setColor(1, 1, 1, 1)
+                if self.adjacentBombsIndicator > 0 then
+                    love.graphics.printf(tostring(self.adjacentBombsIndicator), self.x, self.y + 1, self.width * 1.5, 'center')
+                end
+                love.graphics.polygon("line", self.vertices)
+--            end
         end
     end
+
+
+
 end

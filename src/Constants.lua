@@ -13,7 +13,11 @@ WINDOW_HEIGHT = 720
 
 TILE_SIZE = 16
 
+font = love.graphics.newFont('assets/fonts/font.ttf', 8)
+font:setFilter("nearest", "nearest")
+
 gFonts = {
+    ['smaller'] = font,
     ['small'] = love.graphics.newFont('assets/fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('assets/fonts/font.ttf', 16),
     ['large'] = love.graphics.newFont('assets/fonts/font.ttf', 32)
