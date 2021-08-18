@@ -13,10 +13,6 @@ function PlayState:init()
 --    self.board = Board(3,2)
 end
 
-function PlayState:enter()
-
-end
-
 function PlayState:update(dt)
     self.board:update()
 end
@@ -24,4 +20,3 @@ end
 function PlayState:render()
     self.board:render()
 end
-

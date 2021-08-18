@@ -30,9 +30,6 @@ function StartState:init()
 
 end
 
-function StartState:enter()
-
-end
 
 function StartState:update(dt)
     if love.keyboard.wasPressed('escape') then
@@ -59,7 +56,4 @@ function StartState:drawTitle()
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf("Mine Sweeper", 0, VIRTUAL_HEIGHT / 2 + 36,
         VIRTUAL_WIDTH, 'center')
-end
-
-function StartState:exit()
 end

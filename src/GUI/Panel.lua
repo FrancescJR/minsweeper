@@ -17,7 +17,6 @@ function Panel:init(x, y, width, height)
 end
 
 function Panel:x()
-    print("Here");
     return self.x
 end
 

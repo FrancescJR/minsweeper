@@ -20,10 +20,8 @@ end
 
 function StateStack:push(state)
     table.insert(self.states, state)
-    state:enter()
 end
 
 function StateStack:pop()
-    self.states[#self.states]:exit()
     table.remove(self.states)
 end

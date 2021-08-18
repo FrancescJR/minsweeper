@@ -18,7 +18,7 @@ function Board:init(columnsNumber, rowsNumber, width)
     self.selectedY = 1;
 
     self:generate();
-    self:updateBombsIndicator();
+
 
     self.tiles[self.selectedY][self.selectedX]:select()
 end
@@ -31,9 +31,12 @@ function Board:generate()
             table.insert(self.tiles[tileY], Tile(tileX, tileY, 4, number > 8))
         end
     end
+    self:updateBombsIndicatorAndAdjacentTiles();
 end
 
-function Board:updateBombsIndicator()
+
+
+function Board:updateBombsIndicatorAndAdjacentTiles()
     for tileY = 1, self.rowsNumber do
         for tileX = 1, self.columnsNumber do
             local bombs = 0;
@@ -42,6 +45,7 @@ function Board:updateBombsIndicator()
             for k, adjacenTile in pairs(adjacentTiles) do
                 local addBomb = adjacenTile.hasBomb == true and 1 or 0
                 bombs = bombs + addBomb
+                tile:addAdjacentTile(adjacenTile)
             end
 
 
@@ -99,22 +103,36 @@ function Board:AddNextRowHorizontalTiles(tile, adjacentTiles)
     end
 end
 
+--=================== End creation logic
 function Board:update()
     if love.keyboard.wasPressed('up') then
-        self.selectedY = math.max(1, self.selectedY-1)
+        self.selectedY = self.selectedY-1
+        if self.selectedY < 1 then
+            self.selectedY = self.rowsNumber
+        end
         self:updateSelected();
     elseif love.keyboard.wasPressed('down') then
         self.selectedY = math.min(self.rowsNumber, self.selectedY+1)
+        if self.selectedY > self.rowsNumber then
+            self.selectedY = 1
+        end
         self:updateSelected();
     elseif love.keyboard.wasPressed('left') then
-        self.selectedX = math.max(1, self.selectedX-1)
+        self.selectedX = self.selectedX-1
+        if self.selectedX < 1 then
+            self.selectedX = self.columnsNumber
+        end
         self:updateSelected();
     elseif love.keyboard.wasPressed('right') then
-        self.selectedX = math.min(self.columnsNumber,self.selectedX+1)
+        self.selectedX = self.selectedX+1
+        if self.selectedX > self.columnsNumber then
+            self.selectedX = 1
+        end
         self:updateSelected();
     end
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        self.tiles[self.selectedY][self.selectedX]:uncover();
+        self.tiles[self.selectedY][self.selectedX]:uncover(self);
+--        self:printBoard()
     end
 
 end
@@ -133,6 +151,26 @@ function Board:render()
     for y = 1, #self.tiles do
         for x = 1, #self.tiles[y] do
             self.tiles[y][x]:render(self.x, self.y)
+        end
+    end
+end
+
+function Board:gameOver()
+    print("here")
+    gStateStack:pop()
+    gStateStack:push(GameOverState(self))
+end
+
+--====== AUX function
+
+function Board:printBoard()
+    for y = 1, #self.tiles do
+        for x = 1, #self.tiles[y] do
+            local bombs = 'false';
+            if self.tiles[y][x].uncovered then
+                bombs = 'true'
+            end
+            print(y .. ' ' .. x .. ' '.. bombs)
         end
     end
 end

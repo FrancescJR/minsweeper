@@ -11,6 +11,7 @@ require 'src/StartState/StartState'
 require 'src/PlayState/PlayState'
 require 'src/PlayState/Board/Board'
 require 'src/PlayState/Board/Tile'
+require 'src/GameOverState/GameOverState'
 
 require 'src/GUI/Menu'
 require 'src/GUI/Panel'
