@@ -97,7 +97,7 @@ function Tile:render()
 
     if self.selected then
         love.graphics.setColor(255, 255, 0, 255)
-        love.graphics.polygon("line", self.vertices)
+        love.graphics.polygon("fill", self.vertices)
         love.graphics.setColor(1, 255, 255, 1)
     else
 
